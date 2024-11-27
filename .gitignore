@@ -1,3 +1,4 @@
 seccion-04/01-docker-compose-example/postgres-pgadmin/pgadmin
 seccion-04/01-docker-compose-example/postgres-pgadmin/postgres
 seccion-04/cron-ticker/node_modules
+seccion-04/cron-ticker/dockerfile_v1.txt

@@ -5,3 +5,4 @@ Dockerfile
 .git
 .dockerignore
 .gitignore
+dockerfile_v1.txt
