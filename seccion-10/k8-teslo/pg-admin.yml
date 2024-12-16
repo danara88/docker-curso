@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgadmin-deployment
+  labels:
+    app: pgadmin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgadmin
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+    spec:
+      containers:
+        - name: pgadmin
+          image: dpage/pgadmin4:6.17
+          ports:
+            - containerPort: 80
+          env:
+            - name: PGADMIN_DEFAULT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: pg-admin-secrets
+                  key: PG_USER_PASSWORD
+            - name: PGADMIN_DEFAULT_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: pg-admin-secrets
+                  key: PG_USER_EMAIL
+            - name: PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION
+              value: "False"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgadmin-service
+spec:
+  type: NodePort # Ingress
+  selector:
+    app: pgadmin
+  ports:
+    - protocol: TCP
+      port: 80 # Cualquier puerto, esto es dentro del cluster
+      targetPort: 80 # Este es el puerto que expone
+      nodePort: 30200 # Este debe ester en el rango 30000 - 32767. Expone al mundo exterior

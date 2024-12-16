@@ -29,3 +29,15 @@ Ejecutar este comando:
 ```
 docker compose -f docker-compose.prod.yml build
 ```
+
+```
+docker buildx build \
+--platform linux/amd64,linux/arm64 \
+-t daranda88/teslo-shop:1.0.0 --push .
+```
+
+```
+docker buildx build \
+--platform linux/amd64,linux/arm64 \
+-t registry.digitalocean.com/daranda88-registry/teslo-shop:1.1.0 --push .
+```
